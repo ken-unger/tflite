@@ -1,4 +1,4 @@
-# TensorFlow Lite for PIC64-HPSC-HX
+# TensorFlow Lite for <>
 
 This page describes how to build the TensorFlow Lite library and several examples for PIC64-HPSC-HX and then run these on qemu+debian environment.
 
