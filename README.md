@@ -65,7 +65,7 @@ $ cmake --build . -j -t label_image
 >>
 
 > Note: fix for label_image linking
->> Remove 'protobuf' from tensorflow_src\tensorflow\lite\examples\label_image\CMakelists.txt line 87 since protobuf is already included as a static library
+>> Remove 'protobuf' from tensorflow_src\tensorflow\lite\examples\label_image\CMakelists.txt line 87 since protobuf is already included as a static library.  On a clean machine, -lprotobuf may not be present
 
 ### Copy the binaries and the tflite_model onto QEMU/Debian.
 
