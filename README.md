@@ -1,4 +1,4 @@
-# TensorFlow Lite for <>
+# TensorFlow Lite for PIC64-HPSC
 
 This page describes how to build the TensorFlow Lite library and several examples for PIC64-HPSC-HX and then run these on qemu+debian environment.
 
@@ -86,21 +86,30 @@ The following models are included in tflite_model:
 
 ### Copy the binaries and the tflite_model onto QEMU/Debian.
 
-TBD exact steps.
-
-
-
-### Execute the benchmark example on QEMU
+Use the steps outlined in https://hpsc.microchip.com/docs/debian_support_on_p64h.html (Sharing files between the host and the target) to mount the host path into QEMU/Debian, to enable copying of the generated example files and the the tflite models to the local filesystem in QEMU/Debian
 
 ```bash
-$ ./benchmark_model --num_runs=1 --num_threads=1 --graph=../hpsc/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite
-$ ./benchmark_model --num_runs=1 --num_threads=1 --graph=../hpsc/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.f32.tflite
-
-$ ./benchmark_model --num_runs=1 --num_threads=8 --graph=../hpsc/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite
-$ ./benchmark_model --num_runs=1 --num_threads=8 --graph=../hpsc/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.f32.tflite
+$ cp /mnt/tflite_build_rvv/tools/benchmark/benchmark_model .
+$ cp /mnt/tflite_build_rvv/examples/label_image/label_image .
 ```
 
-### Execute the label_image example on QEMU
+> Note:  One can also copy the tflite_model contents to the QEMU/Debian filesystem, but this package is large and so this README illustrates using that from the host filesystem relative to its mount point /mnt
+
+### TensorFlow Lite Model Benchmarking Tool
+
+The Tensorflow benchmark model tool (benchmark_model) can be used to benchmark any TensorFlow Lote model and its individual operators.  This tool takes a TensorFlow Lite model, generates random inputs, and runs the model for a specified number of runs.  The aggregate latency statistics can be reported at the completion of execution. For more information on this tool consult https://github.com/tensorflow/tensorflow/tree/master/tensorflow/lite/tools/benchmark/README.md
+
+```bash
+$ ./benchmark_model --num_runs=1 --num_threads=1 --enable_op_profiling=true --graph=/mnt/hpsc/tflite/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite
+$ ./benchmark_model --num_runs=1 --num_threads=1 --enable_op_profiling=true --graph=/mnt/hpsc/tflite/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.f32.tflite
+
+$ ./benchmark_model --num_runs=1 --num_threads=8 --enable_op_profiling=true --graph=/mnt/hpsc/tflite/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite
+$ ./benchmark_model --num_runs=1 --num_threads=8 --enable_op_profiling=true --graph=/mnt/hpsc/tflite/tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.f32.tflite
+```
+
+> Note:  QEMU does not accurately model caches, instruction latencies and many other things, and so the performance numbers generated here are not indicative of true performance.  In fact, RVV performance far exceeds what is reported when running on QEMU.  A comparative performance chart will be provided for these examples in the future.  Nevertheless, QEMU can be used for functional correctness tests prior to execution on real silicon (or hardware emulation)
+
+### Image Classification Demo
 
 ```bash
 $ ./label_image -i ./grace_hopper.bmp -m ./tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite -l ./tflite_model/image_classification/mobilenet_v1/labels.txt
