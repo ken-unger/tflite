@@ -5,8 +5,8 @@ This page describes how to build the TensorFlow Lite library and several example
 ## Cross Compiling TensorFlow Lite for the X280 target
 
 This section describes how to build and use the TensorFlow Lite library with CMake tool, and closely follows the instructions here:
-https://www.tensorflow.org/lite/guide/build_cmake
-https://www.tensorflow.org/lite/guide/build_cmake_arm
+- https://www.tensorflow.org/lite/guide/build_cmake
+- https://www.tensorflow.org/lite/guide/build_cmake_arm
 
 These steps assume that you have downloaded and installed the HPSC SDK, including the cross-compiler toolchain, QEMU, and Debian image.
 
@@ -135,5 +135,7 @@ INFO: 0.0156863: 458 458:bow tie, bow-tie, bowtie
 INFO: 0.0117647: 466 466:bulletproof vest
 INFO: 0.00784314: 835 835:suit, suit of clothes
 ```
+
+### TensorFlow Lite Object Detection Demo
 
 -----------------------------------
