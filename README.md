@@ -102,4 +102,24 @@ $ ./benchmark_model --num_runs=1 --num_threads=8 --graph=../hpsc/tflite_model/im
 
 ### Execute the label_image example on QEMU
 
+```bash
+$ ./label_image -i ./grace_hopper.bmp -m ./tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite -l ./tflite_model/image_classification/mobilenet_v1/labels.txt
+
+INFO: total proces:1 process_num:0
+INFO: Loaded model ./tflite_model/image_classification/mobilenet_v1/mobilenet_v1_1.0_224.uint8.tflite
+INFO: resolved reporter
+INFO: use imagenet:0 total process:1
+INFO: read_bmp: 343.085 ms
+INFO: image width:517 image height:606 image channels:3
+INFO: wanted width:224 wanted height:224 wanted channels:3
+INFO: resize: 159.215 ms
+
+INFO: resize: 220.708 ms
+INFO: 0.756863: 653 653:military uniform
+INFO: 0.121569: 907 907:Windsor tie
+INFO: 0.0156863: 458 458:bow tie, bow-tie, bowtie
+INFO: 0.0117647: 466 466:bulletproof vest
+INFO: 0.00784314: 835 835:suit, suit of clothes
+```
+
 -----------------------------------
