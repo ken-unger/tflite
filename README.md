@@ -138,4 +138,6 @@ INFO: 0.00784314: 835 835:suit, suit of clothes
 
 ### TensorFlow Lite Object Detection Demo
 
+To be completed ...
+
 -----------------------------------
