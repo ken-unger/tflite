@@ -30,7 +30,10 @@ $ cmake --build . -j
 
 ### Step 3. Build the TensorFlow binaries for the X280 (riscv64) 
 
-Substitute the path in RISCVCC_PREFIX to the riscv64 toolchain in your environment.
+> Note: The following fix may be required for riscv64 in tensorflow_src/tensorflow/lite/CMakeLists.txt 
+>> line 172  'if (NOT CMAKE_SYSTEM_PROCESSOR OR CMAKE_SYSTEM_PROCESSOR MATCHES "x86" OR CMAKE_SYSTEM_PROCESSOR MATCHES "riscv64")'
+
+Substitute the path in RISCVCC_PREFIX below to the riscv64 toolchain in your environment.  The path to TFLITE_HOST_TOOLS_DIR may need to be modified depending upon your folder structure.
 
 ```bash
 $ mkdir tflite_build_rvv
@@ -51,21 +54,15 @@ $ cmake -DCMAKE_C_COMPILER=${RISCVCC_PREFIX}clang \
 $ cmake --build . -j
 ```
 
-> Note: The following fix may be required for riscv64 in CMakeLists.txt 
->> line 172  'if (NOT CMAKE_SYSTEM_PROCESSOR OR CMAKE_SYSTEM_PROCESSOR MATCHES "x86" OR CMAKE_SYSTEM_PROCESSOR MATCHES "riscv64")'
-
 ### Step 4. Build the example applications
+
+> Note: fix for label_image linking
+>> Remove 'protobuf' from tensorflow_src\tensorflow\lite\examples\label_image\CMakelists.txt line 87 since protobuf is already included as a static library.  On a clean machine, -lprotobuf may not be present
 
 ```bash
 $ cmake --build . -j -t benchmark_model
 $ cmake --build . -j -t label_image  
 ```
-
-> Note: fix for benchmark_model compilation
->>
-
-> Note: fix for label_image linking
->> Remove 'protobuf' from tensorflow_src\tensorflow\lite\examples\label_image\CMakelists.txt line 87 since protobuf is already included as a static library.  On a clean machine, -lprotobuf may not be present
 
 ### Copy the binaries and the tflite_model onto QEMU/Debian.
 
