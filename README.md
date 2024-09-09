@@ -33,6 +33,8 @@ $ cmake --build . -j
 > Note: The following fix may be required for riscv64 in tensorflow_src/tensorflow/lite/CMakeLists.txt 
 >> line 172  'if (NOT CMAKE_SYSTEM_PROCESSOR OR CMAKE_SYSTEM_PROCESSOR MATCHES "x86" OR CMAKE_SYSTEM_PROCESSOR MATCHES "riscv64")'
 
+> Note: The build for Tensorflow Lite pulls a version of https://github.com/google/XNNPACK which may not contain the latest RVV optimizations.  Consult tensorflow_src/tensorflow/lite/tools/cmake/modules/xnnpack.cmake to view the current GIT_TAG being pulled, and update if desired. 
+
 Substitute the path in RISCVCC_PREFIX below to the riscv64 toolchain in your environment.  The path to TFLITE_HOST_TOOLS_DIR may need to be modified depending upon your folder structure.
 
 ```bash
